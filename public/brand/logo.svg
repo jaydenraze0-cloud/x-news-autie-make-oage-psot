@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 240" width="160" height="240" fill="none">
+  <!-- Outer glowing capsule -->
+  <rect x="10" y="10" width="140" height="220" rx="70" ry="70" stroke="#FFFFFF" stroke-width="12" fill="#000000" />
+  <!-- Inner stylized S monogram with tactical cuts -->
+  <path d="M110 75 C110 50, 50 50, 50 78 C50 102, 110 105, 110 135 C110 165, 50 165, 50 140" stroke="#FFFFFF" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- Tactical center dot -->
+  <circle cx="80" cy="188" r="6" fill="#FFFFFF" />
+</svg>

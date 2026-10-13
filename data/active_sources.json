@@ -1,0 +1,603 @@
+[
+  {
+    "id": "feed-1791697517313",
+    "name": "Alibk3",
+    "type": "TELEGRAM_CHANNEL",
+    "queryOrUrl": "https://t.me/Alibk3",
+    "url": "https://t.me/s/Alibk3",
+    "enabled": true,
+    "isOsint": true,
+    "isCustom": true
+  },
+  {
+    "id": "feed-x-https://x.com/Alsakaniali-1791697547931",
+    "name": "@Alsakaniali",
+    "type": "X_ACCOUNT",
+    "queryOrUrl": "@Alsakaniali",
+    "url": "https://x.com/Alsakaniali",
+    "xHandle": "Alsakaniali",
+    "category": "Breaking Wire",
+    "enabled": true,
+    "isOsint": true,
+    "isCustom": true
+  },
+  {
+    "id": "feed-1791699264686",
+    "name": "ClashReport",
+    "type": "TELEGRAM_CHANNEL",
+    "queryOrUrl": "https://t.me/ClashReport",
+    "url": "https://t.me/s/ClashReport",
+    "enabled": true,
+    "isOsint": true,
+    "isCustom": true
+  },
+  {
+    "id": "feed-x-https://x.com/alrougui-1791700465437",
+    "name": "@alrougui",
+    "type": "X_ACCOUNT",
+    "queryOrUrl": "@alrougui",
+    "url": "https://x.com/alrougui",
+    "xHandle": "alrougui",
+    "category": "Breaking Wire",
+    "enabled": true,
+    "isOsint": true,
+    "isCustom": true
+  },
+  {
+    "id": "feed-1791701954886",
+    "name": "exilenova_plus",
+    "type": "TELEGRAM_CHANNEL",
+    "queryOrUrl": "https://t.me/exilenova_plus",
+    "url": "https://t.me/s/exilenova_plus",
+    "enabled": true,
+    "isOsint": true,
+    "isCustom": true
+  },
+  {
+    "id": "feed-bellingcat-osint",
+    "name": "Bellingcat (OSINT Investigations)",
+    "type": "OSINT_DESK",
+    "queryOrUrl": "https://www.bellingcat.com/feed/",
+    "url": "https://www.bellingcat.com/feed/",
+    "enabled": false,
+    "isOsint": true
+  },
+  {
+    "id": "feed-ukmto-osint",
+    "name": "UKMTO (Maritime Security & Bab al-Mandeb Incidents)",
+    "type": "OSINT_DESK",
+    "queryOrUrl": "\"UKMTO\" OR \"United Kingdom Maritime Trade Operations\"",
+    "url": "https://news.google.com/rss/search?q=%22UKMTO%22+OR+%22United+Kingdom+Maritime+Trade+Operations%22&hl=en-US&gl=US&ceid=US:en",
+    "enabled": true,
+    "isOsint": true
+  },
+  {
+    "id": "feed-isw-osint",
+    "name": "Institute for the Study of War (ISW Frontline OSINT)",
+    "type": "OSINT_DESK",
+    "queryOrUrl": "\"Institute for the Study of War\" OR site:understandingwar.org",
+    "url": "https://news.google.com/rss/search?q=%22Institute+for+the+Study+of+War%22+OR+site:understandingwar.org&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false,
+    "isOsint": true
+  },
+  {
+    "id": "feed-geoconfirmed-osint",
+    "name": "GeoConfirmed (Geolocated Combat OSINT)",
+    "type": "OSINT_DESK",
+    "queryOrUrl": "\"GeoConfirmed\" OR site:geoconfirmed.org",
+    "url": "https://news.google.com/rss/search?q=%22GeoConfirmed%22+OR+site:geoconfirmed.org&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false,
+    "isOsint": true
+  },
+  {
+    "id": "feed-zsu-official",
+    "name": "Armed Forces of Ukraine (zsu.gov.ua)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://www.zsu.gov.ua/en/news",
+    "url": "https://news.google.com/rss/search?q=site:zsu.gov.ua&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false
+  },
+  {
+    "id": "feed-zsu-general-staff",
+    "name": "General Staff of the Armed Forces of Ukraine (ZSU)",
+    "type": "GOOGLE_NEWS",
+    "queryOrUrl": "\"General Staff of the Armed Forces of Ukraine\" OR \"General Staff of Ukraine\"",
+    "url": "https://news.google.com/rss/search?q=%22General+Staff+of+the+Armed+Forces+of+Ukraine%22+OR+%22General+Staff+of+Ukraine%22&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false
+  },
+  {
+    "id": "feed-bab-al-mandeb-strait",
+    "name": "Bab al-Mandeb Strait & Red Sea Operations",
+    "type": "GOOGLE_NEWS",
+    "queryOrUrl": "(\"Bab al-Mandeb\" OR \"Bab el-Mandeb\" OR \"Gulf of Aden\" OR \"Red Sea\") (Houthi OR missile OR drone OR warship OR strike OR naval OR tanker OR shipping)",
+    "url": "https://news.google.com/rss/search?q=%28%22Bab+al-Mandeb%22+OR+%22Bab+el-Mandeb%22+OR+%22Gulf+of+Aden%22+OR+%22Red+Sea%22%29+%28Houthi+OR+missile+OR+drone+OR+warship+OR+strike+OR+naval+OR+tanker+OR+shipping%29&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false
+  },
+  {
+    "id": "feed-gnews-strikes",
+    "name": "Google News - Global Strikes & Airstrikes",
+    "type": "GOOGLE_NEWS",
+    "queryOrUrl": "breaking (airstrike OR missile strike OR drone attack OR rocket barrage)",
+    "url": "https://news.google.com/rss/search?q=breaking+(airstrike+OR+missile+strike+OR+drone+attack+OR+rocket+barrage)&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false
+  },
+  {
+    "id": "feed-gnews-geopolitics",
+    "name": "Google News - War Geopolitics & Alliances",
+    "type": "GOOGLE_NEWS",
+    "queryOrUrl": "(geopolitics OR NATO OR Pentagon OR \"nuclear deterrence\" OR \"defense pact\") (war OR military)",
+    "url": "https://news.google.com/rss/search?q=(geopolitics+OR+NATO+OR+Pentagon+OR+\"nuclear+deterrence\"+OR+\"defense+pact\")+(war+OR+military)&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false
+  },
+  {
+    "id": "feed-gnews-ukraine",
+    "name": "Google News - Ukraine & Frontlines",
+    "type": "GOOGLE_NEWS",
+    "queryOrUrl": "Ukraine Russia war frontline strike shelling",
+    "url": "https://news.google.com/rss/search?q=Ukraine+Russia+war+frontline+strike+shelling&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false
+  },
+  {
+    "id": "feed-gnews-mideast",
+    "name": "Google News - Middle East & Red Sea",
+    "type": "GOOGLE_NEWS",
+    "queryOrUrl": "Middle East strike Israel Iran Houthis Yemen Red Sea airstrike",
+    "url": "https://news.google.com/rss/search?q=Middle+East+strike+Israel+Iran+Houthis+Yemen+Red+Sea+airstrike&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false
+  },
+  {
+    "id": "feed-gnews-pacific",
+    "name": "Google News - Taiwan Strait & Indo-Pacific",
+    "type": "GOOGLE_NEWS",
+    "queryOrUrl": "(Taiwan strait OR \"South China Sea\" OR \"North Korea\" OR ICBM OR PLA) military",
+    "url": "https://news.google.com/rss/search?q=(Taiwan+strait+OR+\"South+China+Sea\"+OR+\"North+Korea\"+OR+ICBM+OR+PLA)+military&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false
+  },
+  {
+    "id": "feed-the-war-zone",
+    "name": "The War Zone (Kinetic & Air Strikes)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://www.twz.com/feed",
+    "url": "https://www.twz.com/feed",
+    "enabled": false
+  },
+  {
+    "id": "feed-naval-news",
+    "name": "Naval News (Warships & Naval Clashes)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://www.navalnews.com/feed/",
+    "url": "https://www.navalnews.com/feed/",
+    "enabled": false
+  },
+  {
+    "id": "feed-rss-bbc",
+    "name": "BBC World News (RSS)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://feeds.bbci.co.uk/news/world/rss.xml",
+    "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+    "enabled": false
+  },
+  {
+    "id": "feed-rss-aljazeera",
+    "name": "Al Jazeera International (RSS)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://www.aljazeera.com/xml/rss/all.xml",
+    "url": "https://www.aljazeera.com/xml/rss/all.xml",
+    "enabled": false
+  },
+  {
+    "id": "feed-defense-news",
+    "name": "Defense News (Global Military)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://www.defensenews.com/arc/outboundfeeds/rss/?outputType=xml",
+    "url": "https://www.defensenews.com/arc/outboundfeeds/rss/?outputType=xml",
+    "enabled": false
+  },
+  {
+    "id": "feed-defense-one",
+    "name": "Defense One (Geopolitics & Pentagon)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://www.defenseone.com/rss/all/",
+    "url": "https://www.defenseone.com/rss/all/",
+    "enabled": false
+  },
+  {
+    "id": "feed-defence-blog",
+    "name": "Defence Blog (Frontline & Armor)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://defence-blog.com/feed/",
+    "url": "https://defence-blog.com/feed/",
+    "enabled": false
+  },
+  {
+    "id": "feed-euromaidan",
+    "name": "Euromaidan Press (Ukraine Frontline)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://euromaidanpress.com/feed/",
+    "url": "https://euromaidanpress.com/feed/",
+    "enabled": false
+  },
+  {
+    "id": "feed-the-cradle",
+    "name": "The Cradle (Middle East Conflict)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://thecradle.co/feed",
+    "url": "https://thecradle.co/feed",
+    "enabled": false
+  },
+  {
+    "id": "feed-military-times",
+    "name": "Military Times (Troops & Combat)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://www.militarytimes.com/arc/outboundfeeds/rss/?outputType=xml",
+    "url": "https://www.militarytimes.com/arc/outboundfeeds/rss/?outputType=xml",
+    "enabled": false
+  },
+  {
+    "id": "feed-air-space",
+    "name": "Air & Space Forces (Air Strikes)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://www.airandspaceforces.com/feed/",
+    "url": "https://www.airandspaceforces.com/feed/",
+    "enabled": false
+  },
+  {
+    "id": "feed-gcaptain",
+    "name": "gCaptain (Maritime Security & Bab al-Mandeb)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://gcaptain.com/feed/",
+    "url": "https://gcaptain.com/feed/",
+    "enabled": false
+  },
+  {
+    "id": "feed-army-times",
+    "name": "Army Times (Ground Combat)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://www.armytimes.com/arc/outboundfeeds/rss/?outputType=xml",
+    "url": "https://www.armytimes.com/arc/outboundfeeds/rss/?outputType=xml",
+    "enabled": false
+  },
+  {
+    "id": "feed-c4isrnet",
+    "name": "C4ISRNET (Cyber, EW & Space Defense)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://www.c4isrnet.com/arc/outboundfeeds/rss/?outputType=xml",
+    "url": "https://www.c4isrnet.com/arc/outboundfeeds/rss/?outputType=xml",
+    "enabled": false
+  },
+  {
+    "id": "feed-warontherocks",
+    "name": "War on the Rocks (Defense Strategy)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://warontherocks.com/feed/",
+    "url": "https://warontherocks.com/feed/",
+    "enabled": false
+  },
+  {
+    "id": "feed-modern-war",
+    "name": "Modern War Institute (West Point)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://mwi.westpoint.edu/feed/",
+    "url": "https://mwi.westpoint.edu/feed/",
+    "enabled": false
+  },
+  {
+    "id": "feed-uk-defence-journal",
+    "name": "UK Defence Journal (NATO & Europe)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://ukdefencejournal.org.uk/feed/",
+    "url": "https://ukdefencejournal.org.uk/feed/",
+    "enabled": false
+  },
+  {
+    "id": "feed-france24",
+    "name": "France 24 World (RSS)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://www.france24.com/en/rss",
+    "url": "https://www.france24.com/en/rss",
+    "enabled": false
+  },
+  {
+    "id": "feed-sky-news",
+    "name": "Sky News World (RSS)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://feeds.skynews.com/feeds/rss/world.xml",
+    "url": "https://feeds.skynews.com/feeds/rss/world.xml",
+    "enabled": false
+  },
+  {
+    "id": "feed-dw-world",
+    "name": "Deutsche Welle World (DW)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://rss.dw.com/rdf/rss-en-all",
+    "url": "https://rss.dw.com/rdf/rss-en-all",
+    "enabled": false
+  },
+  {
+    "id": "feed-reuters-defense",
+    "name": "Reuters World Defense & Conflict Wire",
+    "type": "GOOGLE_NEWS",
+    "queryOrUrl": "site:reuters.com (war OR military OR missile OR airstrike OR frontline OR troops OR CENTCOM OR Houthi OR Ukraine OR Gaza OR Iran)",
+    "url": "https://news.google.com/rss/search?q=site:reuters.com+(war+OR+military+OR+missile+OR+airstrike+OR+frontline+OR+troops+OR+CENTCOM+OR+Houthi+OR+Ukraine+OR+Gaza+OR+Iran)&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false
+  },
+  {
+    "id": "feed-ap-defense",
+    "name": "Associated Press (AP) War & Combat Wire",
+    "type": "GOOGLE_NEWS",
+    "queryOrUrl": "site:apnews.com (war OR military OR airstrike OR casualties OR missile OR frontline OR troops OR clashes)",
+    "url": "https://news.google.com/rss/search?q=site:apnews.com+(war+OR+military+OR+airstrike+OR+casualties+OR+missile+OR+frontline+OR+troops+OR+clashes)&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false
+  },
+  {
+    "id": "feed-afp-defense",
+    "name": "AFP (Agence France-Presse) Defense Wire",
+    "type": "GOOGLE_NEWS",
+    "queryOrUrl": "(\"Agence France-Presse\" OR \"AFP\") (war OR military OR airstrike OR missile OR conflict)",
+    "url": "https://news.google.com/rss/search?q=%28%22Agence+France-Presse%22+OR+%22AFP%22%29+%28war+OR+military+OR+airstrike+OR+missile+OR+conflict%29&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false
+  },
+  {
+    "id": "feed-kyiv-independent",
+    "name": "The Kyiv Independent (Ukraine Frontline)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://kyivindependent.com/feed/",
+    "url": "https://kyivindependent.com/feed/",
+    "enabled": true
+  },
+  {
+    "id": "feed-pravda-ua",
+    "name": "Ukrainska Pravda (Defense & War Wire)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://www.pravda.com.ua/eng/rss/",
+    "url": "https://www.pravda.com.ua/eng/rss/",
+    "enabled": false
+  },
+  {
+    "id": "feed-haaretz-war",
+    "name": "Haaretz Conflict & Security Desk",
+    "type": "GOOGLE_NEWS",
+    "queryOrUrl": "site:haaretz.com (war OR military OR strike OR IDF OR Gaza OR Lebanon OR Iran)",
+    "url": "https://news.google.com/rss/search?q=site:haaretz.com+(war+OR+military+OR+strike+OR+IDF+OR+Gaza+OR+Lebanon+OR+Iran)&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false
+  },
+  {
+    "id": "feed-timesofisrael-war",
+    "name": "Times of Israel Defense Wire",
+    "type": "GOOGLE_NEWS",
+    "queryOrUrl": "site:timesofisrael.com (IDF OR military OR strike OR Gaza OR Hezbollah OR missile OR rocket)",
+    "url": "https://news.google.com/rss/search?q=site:timesofisrael.com+(IDF+OR+military+OR+strike+OR+Gaza+OR+Hezbollah+OR+missile+OR+rocket)&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false
+  },
+  {
+    "id": "feed-arabnews-defense",
+    "name": "Arab News Defense & Regional Security",
+    "type": "GOOGLE_NEWS",
+    "queryOrUrl": "site:arabnews.com (military OR Houthis OR Yemen OR Saudi OR strike OR defense OR coalition)",
+    "url": "https://news.google.com/rss/search?q=site:arabnews.com+(military+OR+Houthis+OR+Yemen+OR+Saudi+OR+strike+OR+defense+OR+coalition)&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false
+  },
+  {
+    "id": "feed-tehrantimes-defense",
+    "name": "Tehran Times Defense & Strategic Desk",
+    "type": "GOOGLE_NEWS",
+    "queryOrUrl": "site:tehrantimes.com (IRGC OR military OR missile OR defense OR CENTCOM OR Hormuz)",
+    "url": "https://news.google.com/rss/search?q=site:tehrantimes.com+(IRGC+OR+military+OR+missile+OR+defense+OR+CENTCOM+OR+Hormuz)&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false
+  },
+  {
+    "id": "feed-tasnim-war",
+    "name": "Tasnim News Agency Conflict Wire",
+    "type": "GOOGLE_NEWS",
+    "queryOrUrl": "site:tasnimnews.com (military OR IRGC OR missile OR strike OR defense)",
+    "url": "https://news.google.com/rss/search?q=site:tasnimnews.com+(military+OR+IRGC+OR+missile+OR+strike+OR+defense)&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false
+  },
+  {
+    "id": "feed-tass-military",
+    "name": "TASS Defense & Armed Forces News",
+    "type": "GOOGLE_NEWS",
+    "queryOrUrl": "site:tass.com (military OR defense OR frontline OR strike OR missile OR troops)",
+    "url": "https://news.google.com/rss/search?q=site:tass.com+(military+OR+defense+OR+frontline+OR+strike+OR+missile+OR+troops)&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false
+  },
+  {
+    "id": "feed-sudantribune-war",
+    "name": "Sudan Tribune Conflict Wire",
+    "type": "GOOGLE_NEWS",
+    "queryOrUrl": "site:sudantribune.com (SAF OR RSF OR military OR clashes OR army OR artillery)",
+    "url": "https://news.google.com/rss/search?q=site:sudantribune.com+(SAF+OR+RSF+OR+military+OR+clashes+OR+army+OR+artillery)&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false
+  },
+  {
+    "id": "feed-yonhap-military",
+    "name": "Yonhap News Military Desk (Korea Security)",
+    "type": "GOOGLE_NEWS",
+    "queryOrUrl": "site:en.yna.co.kr (military OR missile OR \"North Korea\" OR ICBM OR defense OR drill)",
+    "url": "https://news.google.com/rss/search?q=site:en.yna.co.kr+(military+OR+missile+OR+%22North+Korea%22+OR+ICBM+OR+defense+OR+drill)&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false
+  },
+  {
+    "id": "feed-militarnyi",
+    "name": "Militarnyi (Defense & Armed Forces Tech)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://mil.in.ua/en/feed/",
+    "url": "https://mil.in.ua/en/feed/",
+    "enabled": false,
+    "isOsint": true
+  },
+  {
+    "id": "feed-defense-express",
+    "name": "Defense Express (Missile & Combat Telemetry)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://en.defence-ua.com/rss/",
+    "url": "https://en.defence-ua.com/rss/",
+    "enabled": false,
+    "isOsint": true
+  },
+  {
+    "id": "feed-the-defense-post",
+    "name": "The Defense Post (Global Military Ops)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://www.thedefensepost.com/feed/",
+    "url": "https://www.thedefensepost.com/feed/",
+    "enabled": false
+  },
+  {
+    "id": "feed-army-recognition",
+    "name": "Army Recognition (Armored Combat Tech)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://www.armyrecognition.com/feed/",
+    "url": "https://www.armyrecognition.com/feed/",
+    "enabled": false
+  },
+  {
+    "id": "feed-breaking-defense",
+    "name": "Breaking Defense (Pentagon & Warfare Tech)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://breakingdefense.com/feed/",
+    "url": "https://breakingdefense.com/feed/",
+    "enabled": false
+  },
+  {
+    "id": "feed-sofrep",
+    "name": "SOFREP (Special Operations Forces Intelligence)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://sofrep.com/feed/",
+    "url": "https://sofrep.com/feed/",
+    "enabled": false
+  },
+  {
+    "id": "feed-task-and-purpose",
+    "name": "Task & Purpose (Military Combat)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://taskandpurpose.com/feed/",
+    "url": "https://taskandpurpose.com/feed/",
+    "enabled": false
+  },
+  {
+    "id": "feed-stars-and-stripes",
+    "name": "Stars and Stripes (US Military Global Fronts)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://www.stripes.com/arc/outboundfeeds/rss/?outputType=xml",
+    "url": "https://www.stripes.com/arc/outboundfeeds/rss/?outputType=xml",
+    "enabled": false
+  },
+  {
+    "id": "feed-militaryland",
+    "name": "MilitaryLand (Frontline Units & Maps)",
+    "type": "WEB_RSS",
+    "queryOrUrl": "https://militaryland.net/feed/",
+    "url": "https://militaryland.net/feed/",
+    "enabled": false,
+    "isOsint": true
+  },
+  {
+    "id": "feed-radar-iran-usa",
+    "name": "Radar Konflik: Iran vs USA (IRGC vs CENTCOM)",
+    "type": "GOOGLE_NEWS",
+    "queryOrUrl": "(\"Iran\" OR \"IRGC\" OR \"Tehran\" OR \"Khamenei\" OR \"Persian Gulf\" OR \"Hormuz\") (\"CENTCOM\" OR \"U.S. Navy\" OR \"carrier\" OR \"Pentagon\" OR \"strike\" OR \"ballistic missile\") when:2h",
+    "url": "https://news.google.com/rss/search?q=%28%22Iran%22+OR+%22IRGC%22+OR+%22Tehran%22+OR+%22Khamenei%22+OR+%22Persian+Gulf%22+OR+%22Hormuz%22%29+%28%22CENTCOM%22+OR+%22U.S.+Navy%22+OR+%22carrier%22+OR+%22Pentagon%22+OR+%22strike%22+OR+%22ballistic+missile%22%29+when:2h&hl=en-US&gl=US&ceid=US:en",
+    "enabled": true,
+    "isOsint": true
+  },
+  {
+    "id": "feed-radar-saudi-yemen",
+    "name": "Radar Konflik: Arab Saudi vs Milisi Yaman (Houthi)",
+    "type": "GOOGLE_NEWS",
+    "queryOrUrl": "(\"Saudi Arabia\" OR \"Riyadh\" OR \"Najran\" OR \"Jizan\" OR \"Khamis Mushait\") (\"Yemen\" OR \"Houthi\" OR \"Ansar Allah\" OR \"drone\" OR \"missile\" OR \"coalition\") when:2h",
+    "url": "https://news.google.com/rss/search?q=%28%22Saudi+Arabia%22+OR+%22Riyadh%22+OR+%22Najran%22+OR+%22Jizan%22+OR+%22Khamis+Mushait%22%29+%28%22Yemen%22+OR+%22Houthi%22+OR+%22Ansar+Allah%22+OR+%22drone%22+OR+%22missile%22+OR+%22coalition%22%29+when:2h&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false,
+    "isOsint": true
+  },
+  {
+    "id": "feed-radar-lebanon",
+    "name": "Radar Front: Israel vs Lebanon (Hezbollah)",
+    "type": "GOOGLE_NEWS",
+    "queryOrUrl": "(\"Lebanon\" OR \"Hezbollah\" OR \"Beirut\" OR \"Litani\" OR \"Dahiyeh\") (strike OR intercepted OR missile OR rocket OR IDF) when:2h",
+    "url": "https://news.google.com/rss/search?q=%28%22Lebanon%22+OR+%22Hezbollah%22+OR+%22Beirut%22+OR+%22Litani%22+OR+%22Dahiyeh%22%29+%28strike+OR+intercepted+OR+missile+OR+rocket+OR+IDF%29+when:2h&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false
+  },
+  {
+    "id": "feed-radar-syria-iraq",
+    "name": "Radar Front: Suriah & Irak (Milisi vs Pangkalan AS)",
+    "type": "GOOGLE_NEWS",
+    "queryOrUrl": "(\"Syria\" OR \"Iraq\" OR \"Al-Tanf\" OR \"Ain al-Asad\" OR \"Golan\" OR \"Deir ez-Zor\") (strike OR drone OR missile OR military) when:2h",
+    "url": "https://news.google.com/rss/search?q=%28%22Syria%22+OR+%22Iraq%22+OR+%22Al-Tanf%22+OR+%22Ain+al-Asad%22+OR+%22Golan%22+OR+%22Deir+ez-Zor%22%29+%28strike+OR+drone+OR+missile+OR+military%29+when:2h&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false
+  },
+  {
+    "id": "feed-radar-sudan",
+    "name": "Radar Konflik: Perang Saudara Sudan (SAF vs RSF)",
+    "type": "GOOGLE_NEWS",
+    "queryOrUrl": "(\"Sudan\" OR \"Khartoum\" OR \"El Fasher\" OR \"Darfur\") (\"SAF\" OR \"RSF\" OR \"Rapid Support Forces\" OR \"army\" OR \"clashes\" OR \"artillery\") when:3h",
+    "url": "https://news.google.com/rss/search?q=%28%22Sudan%22+OR+%22Khartoum%22+OR+%22El+Fasher%22+OR+%22Darfur%22%29+%28%22SAF%22+OR+%22RSF%22+OR+%22Rapid+Support+Forces%22+OR+%22army%22+OR+%22clashes%22+OR+%22artillery%22%29+when:3h&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false
+  },
+  {
+    "id": "feed-radar-korea",
+    "name": "Radar Front: Semenanjung Korea (Korut ICBM vs AS)",
+    "type": "GOOGLE_NEWS",
+    "queryOrUrl": "(\"North Korea\" OR \"DPRK\" OR \"Pyongyang\" OR \"Kim Jong Un\") (missile OR ICBM OR \"nuclear\" OR \"Hwasong\" OR \"military drill\") when:3h",
+    "url": "https://news.google.com/rss/search?q=%28%22North+Korea%22+OR+%22DPRK%22+OR+%22Pyongyang%22+OR+%22Kim+Jong+Un%22%29+%28missile+OR+ICBM+OR+%22nuclear%22+OR+%22Hwasong%22+OR+%22military+drill%22%29+when:3h&hl=en-US&gl=US&ceid=US:en",
+    "enabled": false
+  },
+  {
+    "id": "feed-1791738979977",
+    "name": "YemenWrath",
+    "type": "TELEGRAM_CHANNEL",
+    "queryOrUrl": "https://t.me/YemenWrath",
+    "url": "https://t.me/s/YemenWrath",
+    "enabled": true,
+    "isOsint": true,
+    "isCustom": true
+  },
+  {
+    "id": "feed-x-taha_saleh_taiz-1791740263045",
+    "name": "@taha_saleh_taiz",
+    "type": "X_ACCOUNT",
+    "queryOrUrl": "@taha_saleh_taiz",
+    "url": "https://x.com/taha_saleh_taiz",
+    "xHandle": "taha_saleh_taiz",
+    "category": "Breaking Wire",
+    "enabled": true,
+    "isOsint": true,
+    "isCustom": true
+  },
+  {
+    "id": "feed-x-https://x.com/DeadlyHand313-1791747399254",
+    "name": "@DeadlyHand313",
+    "type": "X_ACCOUNT",
+    "queryOrUrl": "@DeadlyHand313",
+    "url": "https://x.com/DeadlyHand313",
+    "xHandle": "DeadlyHand313",
+    "category": "Breaking Wire",
+    "enabled": true,
+    "isOsint": true,
+    "isCustom": true
+  },
+  {
+    "id": "feed-x-MSAlmalik-1791751786234",
+    "name": "@MSAlmalik",
+    "type": "X_ACCOUNT",
+    "queryOrUrl": "@MSAlmalik",
+    "url": "https://x.com/MSAlmalik",
+    "xHandle": "MSAlmalik",
+    "category": "Breaking Wire",
+    "enabled": true,
+    "isOsint": true,
+    "isCustom": true
+  },
+  {
+    "id": "feed-x-KhaledAl_Azzani-1791762499954",
+    "name": "@KhaledAl_Azzani",
+    "type": "X_ACCOUNT",
+    "queryOrUrl": "@KhaledAl_Azzani",
+    "url": "https://x.com/KhaledAl_Azzani",
+    "xHandle": "KhaledAl_Azzani",
+    "category": "Breaking Wire",
+    "enabled": true,
+    "isOsint": true,
+    "isCustom": true
+  }
+]

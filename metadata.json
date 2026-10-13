@@ -1,0 +1,8 @@
+{
+  "name": "STARK  X NEWS",
+  "description": "Real-time conflict intelligence radar and automated 1080x1080 post studio for @Stark-News-x.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

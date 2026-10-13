@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/brand/logo.svg" />
+    <title>Stark-News-x | War & Defense Intelligence Studio</title>
+    <script>
+      // Suppress Vite HMR WebSocket connection failure notices in iframe preview
+      (function() {
+        var OrigWS = window.WebSocket;
+        if (OrigWS) {
+          window.WebSocket = function(url, protocols) {
+            var isVite = (protocols === 'vite-hmr') ||
+              (Array.isArray(protocols) && protocols.indexOf('vite-hmr') !== -1) ||
+              (typeof url === 'string' && (url.indexOf('vite') !== -1 || url.indexOf('hmr') !== -1));
+            
+            if (isVite) {
+              var target = new EventTarget();
+              target.readyState = 1; // WebSocket.OPEN
+              target.url = url;
+              target.protocol = 'vite-hmr';
+              target.extensions = '';
+              target.bufferedAmount = 0;
+              target.binaryType = 'blob';
+              target.send = function() {};
+              target.close = function() {
+                target.readyState = 3;
+                if (typeof target.onclose === 'function') target.onclose(new CloseEvent('close'));
+                target.dispatchEvent(new CloseEvent('close'));
+              };
+              target.addEventListener = EventTarget.prototype.addEventListener.bind(target);
+              target.removeEventListener = EventTarget.prototype.removeEventListener.bind(target);
+              target.dispatchEvent = EventTarget.prototype.dispatchEvent.bind(target);
+              setTimeout(function() {
+                if (typeof target.onopen === 'function') target.onopen(new Event('open'));
+                target.dispatchEvent(new Event('open'));
+              }, 0);
+              return target;
+            }
+            return new OrigWS(url, protocols);
+          };
+          window.WebSocket.prototype = OrigWS.prototype;
+          window.WebSocket.CONNECTING = 0;
+          window.WebSocket.OPEN = 1;
+          window.WebSocket.CLOSING = 2;
+          window.WebSocket.CLOSED = 3;
+        }
+
+        var origConsoleError = console.error;
+        console.error = function() {
+          var args = Array.prototype.slice.call(arguments);
+          var str = args.map(function(a) { return String(a || ''); }).join(' ');
+          if (str.indexOf('WebSocket') !== -1 || str.indexOf('[vite] failed to connect') !== -1 || str.indexOf('closed without opened') !== -1) {
+            return;
+          }
+          return origConsoleError.apply(console, arguments);
+        };
+
+        var origConsoleWarn = console.warn;
+        console.warn = function() {
+          var args = Array.prototype.slice.call(arguments);
+          var str = args.map(function(a) { return String(a || ''); }).join(' ');
+          if (str.indexOf('WebSocket') !== -1 || str.indexOf('[vite]') !== -1) {
+            return;
+          }
+          return origConsoleWarn.apply(console, arguments);
+        };
+
+        window.addEventListener('unhandledrejection', function(event) {
+          var reason = event && event.reason;
+          var msg = reason ? (reason.message || String(reason)) : '';
+          if (
+            msg.indexOf('WebSocket') !== -1 ||
+            msg.indexOf('websocket') !== -1 ||
+            msg.indexOf('closed without opened') !== -1 ||
+            msg.indexOf('[vite]') !== -1
+          ) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+          }
+        }, true);
+
+        window.addEventListener('error', function(event) {
+          var msg = event && event.message ? String(event.message) : '';
+          if (
+            msg.indexOf('WebSocket') !== -1 ||
+            msg.indexOf('websocket') !== -1 ||
+            msg.indexOf('closed without opened') !== -1 ||
+            msg.indexOf('[vite]') !== -1
+          ) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+          }
+        }, true);
+      })();
+    </script>
+    <style>
+      vite-error-overlay { display: none !important; }
+    </style>
+    <meta name="description" content="Real-time conflict intelligence radar and automated 1080x1080 post studio for @Stark-News-x." />
+    <meta property="og:title" content="Stark-News-x | War & Defense Intelligence Studio" />
+    <meta property="og:description" content="Real-time conflict intelligence radar and automated 1080x1080 post studio for @Stark-News-x." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet" />
+  </head>
+  <body class="bg-black text-white antialiased selection:bg-white selection:text-black">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
