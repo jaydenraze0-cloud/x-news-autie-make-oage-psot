@@ -75,16 +75,16 @@ const rssParser = new Parser({
   },
 });
 
-// Default Conflict Stock Photos (High quality, copyright-free warfare/defense imagery for articles without pictures)
+// Zero Stock Photos policy: No static stock photos. When empty, defaults to clean dark textured canvas
 const FALLBACK_CONFLICT_IMAGES: Record<string, string> = {
-  DRONE: 'https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=1200&q=80',
-  MISSILE: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80',
-  AIRSTRIKE: 'https://images.unsplash.com/photo-1517976487502-86d9a10129cf?auto=format&fit=crop&w=1200&q=80',
-  OFFENSIVE: 'https://images.unsplash.com/photo-1542385151-efd9000785a0?auto=format&fit=crop&w=1200&q=80',
-  NAVAL: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=80',
-  NUCLEAR: 'https://images.unsplash.com/photo-1516245834210-c4c142787335?auto=format&fit=crop&w=1200&q=80',
-  CEASEFIRE: 'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=1200&q=80',
-  DEFAULT: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=1200&q=80',
+  DRONE: '',
+  MISSILE: '',
+  AIRSTRIKE: '',
+  OFFENSIVE: '',
+  NAVAL: '',
+  NUCLEAR: '',
+  CEASEFIRE: '',
+  DEFAULT: '',
 };
 
 export type LocationTag =
@@ -2420,15 +2420,55 @@ async function fetchWikimediaHardwarePhoto(headline: string): Promise<string | n
 }
 
 /**
- * Live Internet Web Photo Search Engine
- * Automatically searches Google/Bing/DuckDuckGo for real news cover photographs
- * matching the headline and subject matter when a story has no image.
+ * Entity & Context Precision Extractor
+ * Extracts prominent figures, countries, leaders, weapon systems, or facilities
+ * to ensure targeted, highly relevant photo search results (e.g. Trump -> Donald Trump news photo).
  */
-async function fetchInternetNewsPhoto(headline: string, summary?: string): Promise<string | null> {
-  if (!headline || headline.trim().length < 2) return null;
+function extractTargetEntityQuery(headline: string, summary?: string): string {
+  const text = `${headline} ${summary || ''}`.trim();
 
-  // Clean headline of noise, URLs, and publisher suffixes
-  let cleanQ = headline
+  // Prominent world leaders and political figures
+  if (/\b(?:Trump|Donald Trump)\b/i.test(text)) return 'Donald Trump news';
+  if (/\b(?:Netanyahu|Bibi)\b/i.test(text)) return 'Benjamin Netanyahu news';
+  if (/\b(?:Putin|Vladimir Putin)\b/i.test(text)) return 'Vladimir Putin news';
+  if (/\b(?:Zelensky|Zelenskyy|Volodymyr)\b/i.test(text)) return 'Volodymyr Zelenskyy news';
+  if (/\b(?:Prabowo|Prabowo Subianto)\b/i.test(text)) return 'Prabowo Subianto news';
+  if (/\b(?:Jokowi|Joko Widodo)\b/i.test(text)) return 'Joko Widodo news';
+  if (/\b(?:Biden|Joe Biden)\b/i.test(text)) return 'Joe Biden news';
+  if (/\b(?:Kamala|Harris)\b/i.test(text)) return 'Kamala Harris news';
+  if (/\b(?:Macron|Emmanuel Macron)\b/i.test(text)) return 'Emmanuel Macron news';
+  if (/\b(?:Starmer|Keir Starmer)\b/i.test(text)) return 'Keir Starmer news';
+  if (/\b(?:Scholz|Olaf Scholz)\b/i.test(text)) return 'Olaf Scholz news';
+  if (/\b(?:Erdogan|Erdoğan)\b/i.test(text)) return 'Recep Tayyip Erdogan news';
+  if (/\b(?:Khamenei|Ali Khamenei)\b/i.test(text)) return 'Ali Khamenei news';
+  if (/\b(?:Pezeshkian|Masoud Pezeshkian)\b/i.test(text)) return 'Masoud Pezeshkian news';
+  if (/\b(?:MBS|Mohammed bin Salman|بن سلمان)\b/i.test(text)) return 'Mohammed bin Salman news';
+  if (/\b(?:Assad|Bashar al-Assad)\b/i.test(text)) return 'Bashar al-Assad news';
+  if (/\b(?:Al Sisi|El-Sisi|السيسي)\b/i.test(text)) return 'Abdel Fattah el-Sisi news';
+
+  // Defense alutsista, combat aircraft, weapons
+  if (/\b(?:F-16|F16|Fighting Falcon)\b/i.test(text)) return 'F-16 fighter jet';
+  if (/\b(?:F-35|F35|Lightning II)\b/i.test(text)) return 'F-35 fighter jet';
+  if (/\b(?:Su-57|Su-35|Su-34|Sukhoi)\b/i.test(text)) return 'Sukhoi fighter jet military';
+  if (/\b(?:B-2|B-2 Spirit|Stealth Bomber)\b/i.test(text)) return 'B-2 Spirit bomber';
+  if (/\b(?:Patriot|PAC-3|MIM-104)\b/i.test(text)) return 'Patriot missile air defense';
+  if (/\b(?:HIMARS|M142)\b/i.test(text)) return 'M142 HIMARS rocket system';
+  if (/\b(?:ATACMS)\b/i.test(text)) return 'ATACMS ballistic missile';
+  if (/\b(?:Shahed|Shahed-136|Geran)\b/i.test(text)) return 'Shahed 136 drone military';
+  if (/\b(?:Abrams|M1 Abrams)\b/i.test(text)) return 'M1 Abrams main battle tank';
+  if (/\b(?:Leopard 2|Leopard)\b/i.test(text)) return 'Leopard 2 tank military';
+  if (/\b(?:Carrier|Aircraft Carrier|Warship|Destroyer)\b/i.test(text)) return 'US Navy aircraft carrier strike group';
+
+  // Strategic sectors & facilities
+  if (/مطار الطائف|Taif Airport|Taif International/i.test(text)) return 'Taif International Airport Saudi';
+  if (/مطار الملك خالد|Riyadh Airport/i.test(text)) return 'King Khalid International Airport Riyadh';
+  if (/Zaporizhzhia|Zaporozhye/i.test(text)) return 'Zaporizhzhia nuclear plant frontline';
+  if (/Bab al-Mandeb|Red Sea|Laut Merah|باب المندب/i.test(text)) return 'Red Sea shipping naval warships';
+  if (/Houthi|Houthis|Ansar Allah|أنصار الله/i.test(text)) return 'Houthi military Yemen fighters';
+  if (/الاهلي|Al Ahly/i.test(text)) return 'Al Ahly SC match';
+
+  // Fallback to cleaned headline (remove noise words)
+  let clean = headline
     .replace(/https?:\/\/\S+/gi, '')
     .replace(/\s+[|–—]\s+[^|–—]+$/, '')
     .replace(/\s+-\s+(?:Reuters|AP|BBC|CNN|AFP|TASS|Bloomberg|The Guardian|The War Zone|Kyiv Independent|Defence Blog|Naval News|Al Jazeera|DW|France 24|Sky News)[^.]*$/i, '')
@@ -2436,20 +2476,31 @@ async function fetchInternetNewsPhoto(headline: string, summary?: string): Promi
     .replace(/["'\u201C\u201D\u2018\u2019#]/g, '')
     .trim();
 
-  // If title is super long, trim to the core 10 words for high search precision
-  const words = cleanQ.split(/\s+/);
-  if (words.length > 10) {
-    cleanQ = words.slice(0, 10).join(' ');
+  const words = clean.split(/\s+/).filter(Boolean);
+  if (words.length > 7) {
+    clean = words.slice(0, 7).join(' ');
   }
+  return clean + ' news';
+}
 
-  const cacheKey = `internet:${cleanQ.toLowerCase()}`;
+/**
+ * Live Internet Web Photo Search Engine
+ * Automatically searches Google/Bing/DuckDuckGo for real news cover photographs
+ * matching the headline and subject matter when a story has no image.
+ */
+async function fetchInternetNewsPhoto(headline: string, summary?: string): Promise<string | null> {
+  if (!headline || headline.trim().length < 2) return null;
+
+  const targetQuery = extractTargetEntityQuery(headline, summary);
+
+  const cacheKey = `internet:${targetQuery.toLowerCase()}`;
   if (resolvedArticleImages.has(cacheKey)) {
     return resolvedArticleImages.get(cacheKey)!;
   }
 
-  // 1. Try Live Bing Images Web Search (fastest & highest resolution news images)
+  // 1. Try Live Bing Images Web Search with Entity-targeted query
   try {
-    const bingUrl = `https://www.bing.com/images/search?q=${encodeURIComponent(cleanQ)}&form=HDRSC2&first=1`;
+    const bingUrl = `https://www.bing.com/images/search?q=${encodeURIComponent(targetQuery)}&form=HDRSC2&first=1`;
     const res = await fetch(bingUrl, {
       headers: {
         'User-Agent':
@@ -2487,7 +2538,7 @@ async function fetchInternetNewsPhoto(headline: string, summary?: string): Promi
 
   // 2. Try DuckDuckGo Images
   try {
-    const tokenRes = await fetch(`https://duckduckgo.com/?q=${encodeURIComponent(cleanQ)}&t=h_&iax=images&ia=images`, {
+    const tokenRes = await fetch(`https://duckduckgo.com/?q=${encodeURIComponent(targetQuery)}&t=h_&iax=images&ia=images`, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
       },
@@ -2498,7 +2549,7 @@ async function fetchInternetNewsPhoto(headline: string, summary?: string): Promi
       const vqdMatch = tokenHtml.match(/vqd=([\d-]+)/) || tokenHtml.match(/vqd="([\d-]+)"/);
       if (vqdMatch && vqdMatch[1]) {
         const ddgImgRes = await fetch(
-          `https://duckduckgo.com/i.js?l=us-en&o=json&q=${encodeURIComponent(cleanQ)}&vqd=${vqdMatch[1]}&f=,,,`,
+          `https://duckduckgo.com/i.js?l=us-en&o=json&q=${encodeURIComponent(targetQuery)}&vqd=${vqdMatch[1]}&f=,,,`,
           {
             headers: {
               'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
@@ -2527,7 +2578,7 @@ async function fetchInternetNewsPhoto(headline: string, summary?: string): Promi
   }
 
   // 3. Fallback to Wikimedia Commons hardware/entity lookup
-  const wikiPhoto = await fetchWikimediaHardwarePhoto(cleanQ);
+  const wikiPhoto = await fetchWikimediaHardwarePhoto(targetQuery);
   if (wikiPhoto) {
     resolvedArticleImages.set(cacheKey, wikiPhoto);
     resolvedArticleImages.set(`title:${headline.trim()}`, wikiPhoto);
@@ -4731,28 +4782,17 @@ Provide output in JSON format with:
 
       const parsed = JSON.parse(responseText || '{}');
 
-      let beforeImg = 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80';
-      let afterImg = 'https://images.unsplash.com/photo-1517976487502-86d9a10129cf?auto=format&fit=crop&w=1200&q=80';
+      const SATELLITE_BEFORE_SVG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800'%3E%3Crect width='100%25' height='100%25' fill='%2308090d'/%3E%3Cpath d='M0 400h1200M600 0v800' stroke='%231f242d' stroke-width='1'/%3E%3Ccircle cx='600' cy='400' r='250' fill='none' stroke='%2322c55e' stroke-width='1.5' stroke-dasharray='4 6' opacity='0.4'/%3E%3Ccircle cx='600' cy='400' r='120' fill='none' stroke='%2322c55e' stroke-width='1' opacity='0.3'/%3E%3Ctext x='40' y='60' fill='%2322c55e' font-family='monospace' font-size='18' letter-spacing='2'%3E[OPTICAL SATELLITE TELEMETRY - BASELINE PASS T-48H]%3C/text%3E%3Ctext x='40' y='740' fill='%2364748b' font-family='monospace' font-size='14'%3ESENSORS: COMMERCIAL MULTISPECTRAL // ELEVATION BASELINE VERIFIED%3C/text%3E%3C/svg%3E";
+      const SATELLITE_AFTER_SVG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800'%3E%3Crect width='100%25' height='100%25' fill='%230b0d12'/%3E%3Cpath d='M0 400h1200M600 0v800' stroke='%23262a36' stroke-width='1'/%3E%3Ccircle cx='600' cy='400' r='250' fill='none' stroke='%23ef4444' stroke-width='1.5' stroke-dasharray='4 6' opacity='0.5'/%3E%3Ccircle cx='600' cy='400' r='40' fill='%23ef4444' fill-opacity='0.25' stroke='%23ef4444' stroke-width='2'/%3E%3Ctext x='40' y='60' fill='%23ef4444' font-family='monospace' font-size='18' letter-spacing='2'%3E[POST-STRIKE BDA ORTHOMOSAIC - CURRENT PASS]%3C/text%3E%3Ctext x='40' y='740' fill='%23ef4444' font-family='monospace' font-size='14'%3EBOMB DAMAGE ASSESSMENT: KINETIC IMPACT CONFIRMED // THERMAL ANOMALY%3C/text%3E%3C/svg%3E";
 
-      if (parsed.category === 'Drone Warfare & UAV') {
-        beforeImg = 'https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=1200&q=80';
-        afterImg = 'https://images.unsplash.com/photo-1542385151-efd9000785a0?auto=format&fit=crop&w=1200&q=80';
-      } else if (parsed.category === 'Naval Warfare & Maritime Security') {
-        beforeImg = 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=80';
-        afterImg = 'https://images.unsplash.com/photo-1579829366248-204fe8413f31?auto=format&fit=crop&w=1200&q=80';
-      } else if (parsed.category === 'Ground War & Frontline Changes') {
-        beforeImg = 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=1200&q=80';
-        afterImg = 'https://images.unsplash.com/photo-1542385151-efd9000785a0?auto=format&fit=crop&w=1200&q=80';
-      } else if (parsed.category === 'Military Logistics & Strategic Infrastructure') {
-        beforeImg = 'https://images.unsplash.com/photo-1516245834210-c4c142787335?auto=format&fit=crop&w=1200&q=80';
-        afterImg = 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80';
-      }
+      let beforeImg = SATELLITE_BEFORE_SVG;
+      let afterImg = SATELLITE_AFTER_SVG;
 
       return res.json({
         success: true,
         aiAvailable: true,
         osintData: {
-          category: parsed.category,
+          category: parsed.category || 'Kinetic Impact & Strikes',
           coordinates: parsed.coordinates || '48.2831°N, 37.1842°E',
           locationName: parsed.locationName || 'Sektor Operasional Militer',
           verificationStatus: parsed.verificationStatus || 'SATELLITE_VERIFIED',
@@ -4778,27 +4818,26 @@ Provide output in JSON format with:
   }
 
   // Fallback heuristics if Gemini key missing or error
+  const SATELLITE_FALLBACK_BEFORE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800'%3E%3Crect width='100%25' height='100%25' fill='%2308090d'/%3E%3Cpath d='M0 400h1200M600 0v800' stroke='%231f242d' stroke-width='1'/%3E%3Ccircle cx='600' cy='400' r='250' fill='none' stroke='%2322c55e' stroke-width='1.5' stroke-dasharray='4 6' opacity='0.4'/%3E%3Ccircle cx='600' cy='400' r='120' fill='none' stroke='%2322c55e' stroke-width='1' opacity='0.3'/%3E%3Ctext x='40' y='60' fill='%2322c55e' font-family='monospace' font-size='18' letter-spacing='2'%3E[OPTICAL SATELLITE TELEMETRY - BASELINE PASS T-48H]%3C/text%3E%3Ctext x='40' y='740' fill='%2364748b' font-family='monospace' font-size='14'%3ESENSORS: COMMERCIAL MULTISPECTRAL // ELEVATION BASELINE VERIFIED%3C/text%3E%3C/svg%3E";
+  const SATELLITE_FALLBACK_AFTER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800'%3E%3Crect width='100%25' height='100%25' fill='%230b0d12'/%3E%3Cpath d='M0 400h1200M600 0v800' stroke='%23262a36' stroke-width='1'/%3E%3Ccircle cx='600' cy='400' r='250' fill='none' stroke='%23ef4444' stroke-width='1.5' stroke-dasharray='4 6' opacity='0.5'/%3E%3Ccircle cx='600' cy='400' r='40' fill='%23ef4444' fill-opacity='0.25' stroke='%23ef4444' stroke-width='2'/%3E%3Ctext x='40' y='60' fill='%23ef4444' font-family='monospace' font-size='18' letter-spacing='2'%3E[POST-STRIKE BDA ORTHOMOSAIC - CURRENT PASS]%3C/text%3E%3Ctext x='40' y='740' fill='%23ef4444' font-family='monospace' font-size='14'%3EBOMB DAMAGE ASSESSMENT: KINETIC IMPACT CONFIRMED // THERMAL ANOMALY%3C/text%3E%3C/svg%3E";
+
   const text = `${title} ${summary || ''} ${conflict || ''}`.toLowerCase();
   let category = 'Airstrikes & Missile Attacks';
   let coords = '48.2831°N, 37.1842°E';
   let locationName = 'Sektor Poros Garis Depan';
-  let beforeImg = 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80';
-  let afterImg = 'https://images.unsplash.com/photo-1517976487502-86d9a10129cf?auto=format&fit=crop&w=1200&q=80';
+  let beforeImg = SATELLITE_FALLBACK_BEFORE;
+  let afterImg = SATELLITE_FALLBACK_AFTER;
   let bda = 'Dampak kinetik terkonfirmasi visual pada fasilitas target.';
 
   if (text.includes('drone') || text.includes('uav') || text.includes('shahed') || text.includes('lancet')) {
     category = 'Drone Warfare & UAV';
     coords = '48.9531°N, 40.3014°E';
     locationName = 'Sektor Garis Kontak Tempur';
-    beforeImg = 'https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=1200&q=80';
-    afterImg = 'https://images.unsplash.com/photo-1542385151-efd9000785a0?auto=format&fit=crop&w=1200&q=80';
     bda = 'Hantaman drone presisi mengenai posisi persenjataan lawan.';
   } else if (text.includes('naval') || text.includes('ship') || text.includes('sea') || text.includes('tanker')) {
     category = 'Naval Warfare & Maritime Security';
     coords = '12.5872°N, 43.3421°E';
     locationName = 'Koridor Selat Bab al-Mandeb & Laut Merah';
-    beforeImg = 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=80';
-    afterImg = 'https://images.unsplash.com/photo-1579829366248-204fe8413f31?auto=format&fit=crop&w=1200&q=80';
     bda = 'Intersepsi maritim berhasil mengamankan jalur navigasi internasional.';
   } else if (text.includes('satellite') || text.includes('airbase') || text.includes('hangar')) {
     category = 'Satellite Imagery & Geolocation';
@@ -4809,8 +4848,6 @@ Provide output in JSON format with:
     category = 'Military Logistics & Strategic Infrastructure';
     coords = '45.0289°N, 35.4053°E';
     locationName = 'Terminal Minyak & Depot Bahan Bakar Strategis';
-    beforeImg = 'https://images.unsplash.com/photo-1516245834210-c4c142787335?auto=format&fit=crop&w=1200&q=80';
-    afterImg = 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80';
     bda = 'Sensor termal satelit mendeteksi pembakaran meluas pada fasilitas penyimpanan logistik.';
   }
 

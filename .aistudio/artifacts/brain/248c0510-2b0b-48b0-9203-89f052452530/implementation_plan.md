@@ -1,6 +1,6 @@
-# Fact-Grounded Intelligence Caption Synthesis for X & YouTube
+# Zero Stock Photos & Entity-Aware Live Web News Photography
 
-This upgrade overhaul aligns caption generation in **CAPTIONS & PUBLISHING** with the actual content of selected news reports and X dispatches. It eliminates hallucinated military claims on general stories, enforces factual grounding with in-depth intelligence background, and produces authoritative English dispatches for X and YouTube.
+This plan overhauls the image pipeline by completely removing all Unsplash stock photos from the application and implementing an entity-aware, automated internet photo search engine. When a news story has no image, the system automatically identifies the key figure, subject, or location (e.g., Donald Trump, Vladimir Putin, F-16, Taif Airport) and instantly injects the single best verified news photograph directly into the studio canvas.
 
 ---
 
@@ -8,48 +8,57 @@ This upgrade overhaul aligns caption generation in **CAPTIONS & PUBLISHING** wit
 
 > [!IMPORTANT]
 > The following architectural decisions were confirmed in Phase 1 clarification:
-> - **Caption Style**: In-depth analysis with intelligence situational background (*Analisis mendalam dengan latar belakang situasi intelijen*).
-> - **Language**: Always English (*Selalu Bahasa Inggris - EN*) for both X and YouTube community dispatches.
-> - **Non-Combat & General Topics**: Strictly tailored to the real subject matter without forcing synthetic combat or weapon jargon.
+> - **Zero Candidate Grid**: As explicitly instructed, the app will **NOT** display a 12-candidate picker. Instead, it will automatically pick and apply the single best matching photo directly to the studio canvas.
+> - **Search Loading State**: When an image is still being resolved from the web, the canvas displays a sleek, dark textured intelligence backdrop with a subtle live search pulse indicator.
+> - **Entity-Aware Precision**: Automatic search extracts named figures and subjects (e.g., news about Trump automatically fetches a verified Donald Trump news photograph).
 
 ---
 
 ## 1. Overview & Core Concept
 
-- **What It Does**: Upgrades the AI rewrite and captioning pipeline (`/api/ai/rewrite` and `CaptionsPanel.tsx`) so that every generated X post and YouTube Community article directly reflects the facts reported in the source feed or tweet, supplemented with accurate geopolitical and strategic context.
-- **Target Audience / Persona**: Conflict news desk editors and OSINT analysts at `@Stark-News-x` who need immediate, trustworthy, publishing-ready copy without fact-checking fictional AI additions.
-- **Key Value**: 100% factual fidelity to source reports, zero invented strikes/casualties on civilian/diplomatic tweets, and structured intelligence analysis in clear, authoritative English.
+- **What It Does**:
+  1. Purges every Unsplash stock URL from `server.ts`, `App.tsx`, `SquareEditor.tsx`, `storage.ts`, `osintClassifier.ts`, and `osintEngine.ts`.
+  2. Implements a zero-stock policy: newly created canvas cards start with a dark textured aesthetic until a real news photo is attached.
+  3. Upgrades the backend photo resolver (`fetchInternetNewsPhoto` in `server.ts`) with named-entity extraction (world leaders, combatants, weapon models, airports, cities).
+  4. Automatically resolves and injects the top matching real photograph into the canvas in under 1 second.
+- **Target Persona**: Conflict news desk editors at `@Stark-News-x` who require genuine, real-world photojournalism without stock photo cliches.
+- **Key Value**: 100% authentic news photography, zero generic stock images, and zero manual searching friction.
 
 ---
 
 ## 2. User Experience & Visual Design
 
 ### Key User Flows
-1. **Story Selection**: User clicks an intelligence dispatch, X post, or wire report in the radar feed.
-2. **Instant Grounded Draft**: The editor immediately populates with pure factual content from the story while Gemini 3.8 Flash synthesizes in the background.
-3. **In-Depth Dispatches in Captions Panel**:
-   - **X (Twitter) Post**: A concise, punchy 180–240 character intelligence wire dispatch containing the verified event, key actors, tactical/political significance, and hashtags.
-   - **YouTube Community Post**: A 3-paragraph structured intelligence briefing (1: The Event & Verified Facts; 2: Strategic / Situational Background; 3: Regional Implications + Stark News call-to-action).
-4. **Topic-Aware Verification**: Clear indicator displaying `Grounding: Verified Source Data` and the source handle/agency.
-5. **Interactive Regenerate**: 1-click regenerate with style fine-tuning (In-Depth Intelligence, Tactical Wire, Geopolitical Analysis).
+1. **Story Selection in Radar**:
+   - User clicks any story in the feed (RSS, X dispatch, Telegram intel).
+   - If the story has a verified publisher photo, it loads instantly.
+   - If the story has no photo, the canvas immediately transitions to a high-contrast dark textured terminal with a quiet status tag: `[SEARCHING WEB INTEL...]`.
+2. **Instant Auto-Injection**:
+   - The backend searches Bing News & DuckDuckGo for the detected entity and event.
+   - The single best high-resolution web photograph is returned and seamlessly injected into `editorConfig.background.imageUrl`.
+   - The radar feed card updates its thumbnail simultaneously.
+3. **Canvas Controls**:
+   - In `SquareEditor.tsx` (Background Photo panel), the status displays:
+     - `✓ Verified Web Photo` or `✓ Publisher Original`.
+   - A quiet `🔍 Re-Search Web Photo` button is available if the user updates the headline and wants a fresh photo.
 
 ### Visual Identity & Theme
-- **Theme**: High-contrast defense intelligence terminal aesthetic (pure `#000000` background, subtle `#262626` borders, crisp `#ffffff` primary text, muted `#a3a3a3` secondary prose).
-- **Typography**: Clean tabular numerals and monospace metadata tags (`font-mono`, `text-[10px]`) for character counters and source attribution.
-- **Micro-Interactions**: Smooth loading states on regeneration, character budget warnings for X (warning at 240, alert at 280), and 1-click clipboard copy buttons with visual checkmarks.
+- **Empty & Loading Canvas**: Deep carbon dark background (`#0a0a0c`) with a subtle radial gradient and tactical grid texture, eliminating generic Unsplash photos.
+- **Micro-Interactions**: Smooth fade-in transition when the internet photo arrives; zero jarring layout shifts.
+- **Typography**: Tabular numerals and monospace attribution badges (`text-[10px] font-mono`).
 
 ---
 
 ## 3. Key Product Decisions & Trade-Offs
 
-### Decision 1: Topic-Adaptive Intelligence Grounding vs. Rigid Combat Template
-- **Chosen Approach**: Dynamically evaluate whether the incoming report is a military engagement, diplomatic maneuver, political development, or general civilian report. The prompt instructs Gemini 3.8 Flash to adjust its analytical frame accordingly, forbidding the invention of weapon systems, casualties, or missile strikes when none exist in the source.
-- **Why**: The previous template forced every tweet (even sports or diplomacy) into a military combat framework ("weapons used, casualty figures, frontline sectors"), causing hallucinations.
-- **Alternatives Considered**: Hardcoded regex category routing (too brittle for nuanced multilingual dispatches).
+### Decision 1: Single Best Photo Auto-Injection vs. 12-Photo Gallery Grid
+- **Chosen Approach**: Automatically evaluate and select the highest-confidence press photograph from Bing and Wikimedia and apply it immediately to the canvas, as confirmed by the user.
+- **Why**: Editors publish breaking news in seconds; forcing them to choose from a 12-item grid adds unnecessary friction.
+- **Alternatives Considered**: 12-candidate modal (rejected per user's explicit preference).
 
-### Decision 2: Fact-Anchor Heuristic Fallback
-- **Chosen Approach**: Overhaul the offline/quota fallback in `server.ts` to directly extract and translate the actual sentences and entities from `title` and `summary`, rather than substituting canned Arabic/Cyrillic combat headlines.
-- **Why**: Guarantees that even if API keys or rate limits fluctuate, captions will never display unrelated battlefield claims.
+### Decision 2: Complete Purge of Unsplash Stock URLs
+- **Chosen Approach**: Remove all Unsplash image links across `server.ts`, `osintClassifier.ts`, `osintEngine.ts`, and `storage.ts`. Default state is an authentic dark textured military terminal background.
+- **Why**: Ensures no stock photos can ever leak into published graphics or radar cards.
 
 ---
 
@@ -57,60 +66,48 @@ This upgrade overhaul aligns caption generation in **CAPTIONS & PUBLISHING** wit
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    Live Radar Feed                          │
-│     (X Tweets, Telegram Intel, Google News, Custom Feeds)   │
+│                    Story Selected in Radar                  │
+│       (X Tweet / RSS Wire / Telegram / Search Result)       │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+            ┌──────────────────┴──────────────────┐
+            ▼                                     ▼
+   [Has Publisher Photo?]                [No Photo Found]
+            │                                     │
+            ▼                                     ▼
+   Apply directly to Canvas           Canvas shows Dark Textured
+                                      Backdrop + Search Indicator
+                                                  │
+                                                  ▼
+┌─────────────────────────────────────────────────────────────┐
+│               Server: /api/resolve-image                    │
+│  1. Extract Core Entities (e.g. Trump, Putin, Taif, F-16)   │
+│  2. Query Bing News Images + DuckDuckGo Image Engine        │
+│  3. Filter out icons, svgs, logos, tracking pixels          │
+│  4. Select Single Best High-Resolution Press Photograph     │
 └──────────────────────────────┬──────────────────────────────┘
                                │
                                ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                Unified News Dispatch Object                 │
-│    { title, summary, source, authorHandle, link, category } │
-└──────────────────────────────┬──────────────────────────────┘
-                               │
-                               ▼
-┌─────────────────────────────────────────────────────────────┐
-│             Server Route: POST /api/ai/rewrite              │
-│  - Extracts full dispatch content (title + summary + media) │
-│  - Classifies domain: Military / Diplomatic / General       │
-│  - Executes Gemini 3.8 Flash Neural Engine with Grounding   │
-│  - Multi-model fallback: gemini-3.8-flash -> 3.1-flash-lite │
-│  - Deterministic entity-preserving fallback if offline      │
-└──────────────────────────────┬──────────────────────────────┘
-                               │
-              ┌────────────────┴────────────────┐
-              ▼                                 ▼
-┌──────────────────────────────┐ ┌─────────────────────────────┐
-│        X (Twitter) Post      │ │     YouTube Community Post  │
-│  - Factual Lead Sentence     │ │  - Paragraph 1: Event Lead  │
-│  - Strategic Context Line    │ │  - Paragraph 2: Situation   │
-│  - Clean Hashtags & Handle   │ │  - Paragraph 3: Outlook/CTA │
-└──────────────────────────────┘ └─────────────────────────────┘
-              │                                 │
-              └────────────────┬────────────────┘
-                               ▼
-┌─────────────────────────────────────────────────────────────┐
-│           CaptionsPanel (CAPTIONS & PUBLISHING)             │
-│    - Live bidirectional sync with Canvas headline           │
-│    - Character counter & copy buttons                        │
-│    - Topic grounding indicator                              │
+│             Automatic Canvas Background Injection           │
+│  - Sets canvas background.imageUrl = resolvedPhoto          │
+│  - Updates selectedStory & feed thumbnail state             │
+│  - Displays "✓ Verified Web Photo" status badge             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### Data Contracts & Model Configuration
-- **Endpoint**: `POST /api/ai/rewrite`
-  - Request: `{ title, summary, source, authorHandle, targetLang: 'en', category }`
-  - Response Schema:
-    ```json
-    {
-      "headline": "PUNCHY 6-9 WORD HEADLINE IN UPPERCASE",
-      "highlight_words": "2-3 TACTICAL/KEY TERMS",
-      "caption_x": "Accurate 180-240 char English post with verified context...",
-      "caption_youtube": "3-paragraph in-depth intelligence dispatch in English...",
-      "hashtags": ["#StarkNews", "#Geopolitics", "#SpecificTopic"],
-      "groundingSummary": "Verified summary of facts from source",
-      "aiAvailable": true,
-      "provider": "Gemini 3.8 Flash Neural Engine"
-    }
-    ```
-- **Gemini Model**: `gemini-3.8-flash` primary with `gemini-3.1-flash-lite` fallback.
-- **Client Components**: `src/components/CaptionsPanel.tsx`, `src/App.tsx`, and `server.ts`.
+### Components to Update
+1. `server.ts`:
+   - Delete `FALLBACK_IMAGES` Unsplash records.
+   - Upgrade `fetchInternetNewsPhoto` with entity recognition (leaders, military assets, facilities).
+   - Ensure `cachedStories` background pre-fetch automatically populates internet photos.
+2. `src/utils/storage.ts`:
+   - Replace default Unsplash image URLs with empty string (`''`) so canvas defaults to dark textured aesthetic.
+3. `src/utils/osintClassifier.ts` & `src/utils/osintEngine.ts`:
+   - Remove all Unsplash URLs; use dark textured radar coordinates.
+4. `src/components/SquareEditor.tsx`:
+   - Remove all references to `images.unsplash.com`.
+   - Render textured canvas with loading indicator when an image is being resolved.
+   - Display `✓ Verified Web Photo` attribution.
+5. `src/App.tsx`:
+   - Ensure clean auto-injection pipeline for selected stories.

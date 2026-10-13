@@ -68,14 +68,18 @@ export const OsintManagerModal: React.FC<OsintManagerModalProps> = ({
   const [sensorType, setSensorType] = useState<'OPTICAL' | 'SAR_RADAR' | 'INFRARED_FIRMS' | 'COMMERCIAL_SAT'>(
     initialOsint?.satelliteImagery?.sensorType || 'COMMERCIAL_SAT'
   );
+  const DEFAULT_BEFORE_SAT =
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800"><rect width="1200" height="800" fill="%230c1017"/><circle cx="600" cy="400" r="300" stroke="%2338bdf8" stroke-width="1.5" stroke-opacity="0.3" fill="none"/><circle cx="600" cy="400" r="180" stroke="%2338bdf8" stroke-width="1" stroke-opacity="0.2" fill="none"/><circle cx="600" cy="400" r="80" stroke="%2338bdf8" stroke-width="1" stroke-opacity="0.2" fill="none"/><line x1="600" y1="50" x2="600" y2="750" stroke="%2338bdf8" stroke-width="1" stroke-opacity="0.25"/><line x1="150" y1="400" x2="1050" y2="400" stroke="%2338bdf8" stroke-width="1" stroke-opacity="0.25"/><text x="600" y="390" fill="%2338bdf8" font-family="monospace" font-size="16" text-anchor="middle" letter-spacing="4">SATELLITE RECON SECTOR</text><text x="600" y="420" fill="%2394a3b8" font-family="monospace" font-size="12" text-anchor="middle">48.2831°N, 37.1842°E [OPTICAL PRE-STRIKE]</text></svg>';
+  const DEFAULT_AFTER_SAT =
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800"><rect width="1200" height="800" fill="%23120d0f"/><circle cx="600" cy="400" r="300" stroke="%23f43f5e" stroke-width="1.5" stroke-opacity="0.3" fill="none"/><circle cx="600" cy="400" r="180" stroke="%23f43f5e" stroke-width="1" stroke-opacity="0.2" fill="none"/><circle cx="600" cy="400" r="80" stroke="%23f43f5e" stroke-width="1" stroke-opacity="0.2" fill="none"/><line x1="600" y1="50" x2="600" y2="750" stroke="%23f43f5e" stroke-width="1" stroke-opacity="0.25"/><line x1="150" y1="400" x2="1050" y2="400" stroke="%23f43f5e" stroke-width="1" stroke-opacity="0.25"/><text x="600" y="390" fill="%23f43f5e" font-family="monospace" font-size="16" text-anchor="middle" letter-spacing="4">BDA POST-STRIKE RECON</text><text x="600" y="420" fill="%23fda4af" font-family="monospace" font-size="12" text-anchor="middle">IMPACT CONFIRMED [INFRASTRUCTURE SEC]</text></svg>';
+
   const [beforeImageUrl, setBeforeImageUrl] = useState<string>(
-    initialOsint?.satelliteImagery?.beforeImageUrl ||
-      'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80'
+    initialOsint?.satelliteImagery?.beforeImageUrl || DEFAULT_BEFORE_SAT
   );
   const [afterImageUrl, setAfterImageUrl] = useState<string>(
     initialOsint?.satelliteImagery?.afterImageUrl ||
       story?.imageUrl ||
-      'https://images.unsplash.com/photo-1517976487502-86d9a10129cf?auto=format&fit=crop&w=1200&q=80'
+      DEFAULT_AFTER_SAT
   );
   const [equipmentList, setEquipmentList] = useState<string[]>(
     initialOsint?.equipmentIdentified && initialOsint.equipmentIdentified.length > 0
@@ -100,13 +104,12 @@ export const OsintManagerModal: React.FC<OsintManagerModalProps> = ({
       setTargetFacility(data.satelliteImagery?.targetFacility || 'Fasilitas Pangkalan Militer');
       setSensorType(data.satelliteImagery?.sensorType || 'COMMERCIAL_SAT');
       setBeforeImageUrl(
-        data.satelliteImagery?.beforeImageUrl ||
-          'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80'
+        data.satelliteImagery?.beforeImageUrl || DEFAULT_BEFORE_SAT
       );
       setAfterImageUrl(
         data.satelliteImagery?.afterImageUrl ||
           story.imageUrl ||
-          'https://images.unsplash.com/photo-1517976487502-86d9a10129cf?auto=format&fit=crop&w=1200&q=80'
+          DEFAULT_AFTER_SAT
       );
       setEquipmentList(
         data.equipmentIdentified && data.equipmentIdentified.length > 0

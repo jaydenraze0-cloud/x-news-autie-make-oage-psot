@@ -1,6 +1,6 @@
 {
-  "summary": "Implementation plan for fact-grounded intelligence caption synthesis for X and YouTube posts. Resolves content mismatches by implementing topic-adaptive Gemini 3.8 Flash prompt engineering, grounding constraints to eliminate hallucinations, consistent English output, and robust non-combat handling.",
-  "updatedAt": "2026-10-13T01:25:10.586652189Z",
+  "summary": "Implementation plan to completely eliminate all Unsplash stock photos from the app (Zero Stock Photos policy), provide an entity-aware automatic internet photo search engine that finds the best real news photograph (e.g. Trump, Zelensky, military hardware, airports) and auto-injects it directly into the canvas studio, with a sleek dark textured canvas loading state while searching.",
+  "updatedAt": "2026-10-13T09:14:00.662958486Z",
   "requestFeedback": true,
   "userFacing": true
 }

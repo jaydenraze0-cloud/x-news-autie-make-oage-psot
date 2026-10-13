@@ -53,6 +53,7 @@ export default function App() {
   const [isPolling, setIsPolling] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isRegeneratingCaptions, setIsRegeneratingCaptions] = useState(false);
+  const [isResolvingImage, setIsResolvingImage] = useState(false);
   const [secondsSinceUpdate, setSecondsSinceUpdate] = useState(0);
   const [aiAvailable, setAiAvailable] = useState(false);
 
@@ -173,9 +174,9 @@ export default function App() {
             title: story.title,
             summary: story.summary,
             source: story.source,
-            category: story.category,
+            category: story.osintCategory || story.intelligenceType || story.locationTag,
             xHandle: story.xHandle,
-            author: story.author,
+            author: story.xAuthorName,
             targetLang: 'en',
             focusStyle,
             militaryTracking: tracking,
@@ -265,6 +266,9 @@ export default function App() {
       setCaptionYouTube(initialCaptionYT);
 
       // Auto-resolve exact real news photo from publisher website or headline
+      if (!story.imageUrl) {
+        setIsResolvingImage(true);
+      }
       const resolveUrl = `/api/resolve-image?url=${encodeURIComponent(story.link || '')}&title=${encodeURIComponent(story.title || '')}`;
       fetch(resolveUrl)
         .then((r) => r.json())
@@ -285,7 +289,10 @@ export default function App() {
             );
           }
         })
-        .catch(() => {});
+        .catch(() => {})
+        .finally(() => {
+          setIsResolvingImage(false);
+        });
 
       // Generate captions via AI engine
       generateCaptionsForStory(story, selectedLang);
@@ -923,6 +930,19 @@ export default function App() {
             storyImageUrl={selectedStory?.imageUrl}
             storyLink={selectedStory?.link}
             onUpdateDefaultLogo={handleUpdateDefaultLogo}
+            isResolvingImage={isResolvingImage}
+            onStoryImageResolved={(imgUrl) => {
+              setSelectedStory((prev) =>
+                prev ? { ...prev, imageUrl: imgUrl, hasOriginalImage: true } : prev
+              );
+              setStories((prev) =>
+                prev.map((s) =>
+                  s.id === selectedStory?.id
+                    ? { ...s, imageUrl: imgUrl, hasOriginalImage: true }
+                    : s
+                )
+              );
+            }}
           />
         </section>
 

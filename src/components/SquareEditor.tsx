@@ -33,6 +33,8 @@ interface SquareEditorProps {
   storyImageUrl?: string;
   storyLink?: string;
   onUpdateDefaultLogo?: (logoDataUrl: string, removeBg: boolean) => void;
+  isResolvingImage?: boolean;
+  onStoryImageResolved?: (imageUrl: string) => void;
 }
 
 type EditorTab = 'text' | 'highlight' | 'photo' | 'glow' | 'brand';
@@ -46,12 +48,15 @@ export const SquareEditor: React.FC<SquareEditorProps> = ({
   storyImageUrl,
   storyLink,
   onUpdateDefaultLogo,
+  isResolvingImage: isResolvingImageProp = false,
+  onStoryImageResolved,
 }) => {
   const [activeTab, setActiveTab] = useState<EditorTab>('text');
   const [isExporting, setIsExporting] = useState(false);
   const [isCopying, setIsCopying] = useState(false);
   const [isInlineEditing, setIsInlineEditing] = useState(false);
-  const [isResolvingImage, setIsResolvingImage] = useState(false);
+  const [isResolvingImageLocal, setIsResolvingImageLocal] = useState(false);
+  const isResolvingImage = isResolvingImageProp || isResolvingImageLocal;
   const [previewScale, setPreviewScale] = useState(0.48);
   const containerRef = useRef<HTMLDivElement>(null);
   const postRef = useRef<HTMLDivElement>(null);
@@ -172,7 +177,7 @@ export const SquareEditor: React.FC<SquareEditorProps> = ({
   };
 
   const handleFetchOriginalNewsPhoto = async (customQuery?: string) => {
-    setIsResolvingImage(true);
+    setIsResolvingImageLocal(true);
     try {
       const q = customQuery || config.headline || '';
       const link = storyLink || '';
@@ -185,9 +190,12 @@ export const SquareEditor: React.FC<SquareEditorProps> = ({
           ...config,
           background: { ...config.background, imageUrl: data.imageUrl },
         });
+        if (onStoryImageResolved) {
+          onStoryImageResolved(data.imageUrl);
+        }
         onShowToast(
           data.source === 'internet-search'
-            ? 'Auto-discovered real web photo applied to canvas!'
+            ? 'Real web photo automatically discovered & applied to canvas!'
             : 'Original cover photo applied to canvas!',
           'success'
         );
@@ -207,9 +215,11 @@ export const SquareEditor: React.FC<SquareEditorProps> = ({
           background: { ...config.background, imageUrl: storyImageUrl },
         });
         onShowToast('Article image applied!', 'success');
+      } else {
+        onShowToast('Search request timed out.', 'error');
       }
     } finally {
-      setIsResolvingImage(false);
+      setIsResolvingImageLocal(false);
     }
   };
 
@@ -563,28 +573,98 @@ export const SquareEditor: React.FC<SquareEditorProps> = ({
               fontFamily: "'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
             }}
           >
-            {/* Layer 1: Background Image with Zoom and Pan */}
-            {config.background.imageUrl && (
+            {/* Layer 1: Dark Textured Base Canvas & Background Image */}
+            <div className="absolute inset-0 overflow-hidden bg-[#0a0a0f]">
+              {/* Tactical Dark Grid & Carbon Texture Pattern */}
               <div
-                className="absolute inset-0 overflow-hidden transition-transform duration-75"
+                className="absolute inset-0 pointer-events-none opacity-40"
                 style={{
-                  transform: `scale(${config.background.zoom / 100}) translate(${config.background.panX}px, ${config.background.panY}px)`,
+                  backgroundImage: `
+                    radial-gradient(circle at 50% 40%, rgba(30, 41, 59, 0.45) 0%, rgba(10, 10, 15, 0.95) 75%),
+                    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px)
+                  `,
+                  backgroundSize: '100% 100%, 72px 72px, 72px 72px',
                 }}
-              >
-                <img
-                  src={getSafeImageUrl(config.background.imageUrl)}
-                  alt="News Cover"
-                  crossOrigin="anonymous"
-                  className="h-full w-full object-cover object-center pointer-events-none"
-                  onError={(e) => {
-                    const img = e.currentTarget;
-                    // Safe in-memory fallback without bypassing CORS or tainting canvas
-                    img.src =
-                      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1080'%3E%3Crect width='1080' height='1080' fill='%2312141a'/%3E%3Cpath d='M0 0l1080 1080M1080 0L0 1080' stroke='%23ffffff' stroke-opacity='0.03' stroke-width='2'/%3E%3C/svg%3E";
-                  }}
-                />
+              />
+
+              {/* Tactical Corner Coordinates & Crosshairs */}
+              <div className="absolute top-6 left-6 font-mono text-[11px] text-neutral-600 tracking-wider pointer-events-none">
+                + [SYS.GRID: 1080x1080 / AUTHENTIC INTEL]
               </div>
-            )}
+              <div className="absolute top-6 right-6 font-mono text-[11px] text-neutral-600 tracking-wider pointer-events-none">
+                LAT 48°28'N // LON 37°18'E +
+              </div>
+
+              {/* Real News Photo (Fade-in when resolved) */}
+              {config.background.imageUrl ? (
+                <div
+                  className="absolute inset-0 overflow-hidden transition-transform duration-75"
+                  style={{
+                    transform: `scale(${config.background.zoom / 100}) translate(${config.background.panX}px, ${config.background.panY}px)`,
+                  }}
+                >
+                  <img
+                    src={getSafeImageUrl(config.background.imageUrl)}
+                    alt="News Cover"
+                    crossOrigin="anonymous"
+                    className="h-full w-full object-cover object-center pointer-events-none transition-opacity duration-300"
+                    onError={(e) => {
+                      const img = e.currentTarget;
+                      // Safe in-memory fallback without bypassing CORS or tainting canvas
+                      img.src =
+                        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1080'%3E%3Crect width='1080' height='1080' fill='%2312141a'/%3E%3Cpath d='M0 0l1080 1080M1080 0L0 1080' stroke='%23ffffff' stroke-opacity='0.03' stroke-width='2'/%3E%3C/svg%3E";
+                    }}
+                  />
+                </div>
+              ) : null}
+
+              {/* Tactical Radar Search Indicator (shown when searching internet photo) */}
+              {isResolvingImage && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center p-8 z-10 pointer-events-none bg-black/60 backdrop-blur-[2px]">
+                  {/* High-tech Radar Pulse Rings */}
+                  <div className="relative flex items-center justify-center mb-6">
+                    <div className="absolute h-48 w-48 rounded-full border border-cyan-500/20 animate-ping" />
+                    <div className="absolute h-40 w-40 rounded-full border border-cyan-400/30 animate-pulse" />
+                    <div className="relative h-28 w-28 rounded-full border-2 border-dashed border-cyan-400/60 animate-spin flex items-center justify-center" />
+                    <div className="absolute flex flex-col items-center justify-center">
+                      <RefreshCw className="h-8 w-8 text-cyan-400 animate-spin" />
+                    </div>
+                  </div>
+
+                  {/* Telemetry Status Box */}
+                  <div className="rounded-xl border border-cyan-500/40 bg-neutral-950/90 px-6 py-4 shadow-[0_0_30px_rgba(6,182,212,0.25)] text-center max-w-[640px]">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-cyan-400/40 bg-cyan-950/70 px-3 py-1 text-[11px] font-mono font-bold text-cyan-300 mb-2.5">
+                      <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
+                      <span>LIVE WEB INTEL: SCANNING PRESS PHOTOGRAPHY</span>
+                    </div>
+                    <div className="text-sm font-bold text-white mb-1.5 line-clamp-1">
+                      {config.headline || 'Searching Real Web Photo'}
+                    </div>
+                    <div className="text-[11px] font-mono text-neutral-400 flex items-center justify-center gap-2">
+                      <span>ENGINES: GOOGLE & BING LIVE ARCHIVES</span>
+                      <span>•</span>
+                      <span className="text-cyan-400">AUTO-APPLYING TOP MATCH</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Clean Dark Textured State (when no image and not actively searching) */}
+              {!config.background.imageUrl && !isResolvingImage && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center p-8 pointer-events-none">
+                  <div className="rounded-xl border border-white/10 bg-black/75 backdrop-blur-sm px-6 py-4 text-center max-w-[540px]">
+                    <div className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-neutral-400 mb-2">
+                      <span className="h-1.5 w-1.5 rounded-full bg-neutral-500" />
+                      <span>DARK TEXTURED CANVASS ACTIVE</span>
+                    </div>
+                    <div className="text-xs text-neutral-400 font-mono">
+                      Zero stock photos. Use Auto-Search in Photo tab or feed to auto-load web photos.
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* Layer 2: Soft Dark Top Gradient */}
             <div
@@ -1195,20 +1275,20 @@ export const SquareEditor: React.FC<SquareEditorProps> = ({
                 </div>
                 <div>
                   <div className="flex items-center gap-1.5 text-xs font-bold text-white">
-                    <ImageIcon className="h-3.5 w-3.5 text-emerald-400" />
-                    <span>Article Photo</span>
-                    <span className={`rounded px-1.5 py-0.2 text-[9px] font-bold ${
-                      config.background.imageUrl.includes('images.unsplash.com')
-                        ? 'bg-neutral-800 text-neutral-400'
-                        : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                    <ImageIcon className="h-3.5 w-3.5 text-cyan-400" />
+                    <span>Canvas Background Photo</span>
+                    <span className={`rounded px-1.5 py-0.5 text-[9px] font-bold ${
+                      config.background.imageUrl
+                        ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                        : 'bg-neutral-800 text-neutral-400 border border-white/10'
                     }`}>
-                      {config.background.imageUrl.includes('images.unsplash.com') ? 'Archive Placeholder' : '✓ Verified Article Photo'}
+                      {config.background.imageUrl ? '✓ Verified Web Photo' : 'Dark Textured Backdrop'}
                     </span>
                   </div>
                   <p className="text-[10px] text-neutral-400">
-                    {config.background.imageUrl.includes('images.unsplash.com')
-                      ? 'Click button on right to load photo from source article'
-                      : 'Original photo from news report successfully applied'}
+                    {config.background.imageUrl
+                      ? 'Live web news photo automatically matched & applied to canvas'
+                      : 'Textured carbon mode active. Click auto-search to find photo on internet'}
                   </p>
                 </div>
               </div>

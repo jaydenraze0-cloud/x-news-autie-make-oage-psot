@@ -1650,9 +1650,7 @@ export function loadCurrentEditorConfig(settings: AppSettings): EditorConfig {
             },
           },
           background: {
-            imageUrl:
-              parsed.background?.imageUrl ||
-              'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80',
+            imageUrl: parsed.background?.imageUrl || '',
             zoom: parsed.background?.zoom ?? 100,
             panX: parsed.background?.panX ?? 0,
             panY: parsed.background?.panY ?? 0,
@@ -1691,7 +1689,7 @@ export function loadCurrentEditorConfig(settings: AppSettings): EditorConfig {
 
   return createDefaultEditorConfig(
     'MASSIVE MISSILE BARRAGE REPORTED IN STRATEGIC THEATRE',
-    'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80',
+    '',
     'Stark-News-x Radar',
     settings,
     true
@@ -1877,7 +1875,7 @@ export function applyStoryToEditorConfig(
     },
     background: {
       ...prevConfig.background,
-      imageUrl: imageUrl || prevConfig.background?.imageUrl,
+      imageUrl: imageUrl !== undefined ? imageUrl : '',
       zoom: prevConfig.background?.zoom ?? prefs?.backgroundZoom ?? 100,
       panX: prevConfig.background?.panX ?? prefs?.backgroundPanX ?? 0,
       panY: prevConfig.background?.panY ?? prefs?.backgroundPanY ?? 0,
@@ -1953,7 +1951,7 @@ export function createDefaultEditorConfig(
           toggles: { ...settings.glowDefaults.toggles },
         },
     background: {
-      imageUrl: prefs?.imageUrl || imageUrl,
+      imageUrl: imageUrl || '',
       zoom: prefs?.backgroundZoom ?? 100,
       panX: prefs?.backgroundPanX ?? 0,
       panY: prefs?.backgroundPanY ?? 0,
